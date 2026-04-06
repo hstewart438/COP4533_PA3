@@ -88,12 +88,14 @@ dp[i][0] = 0   for all i
 An empty prefix of either string has no characters to match, so the value is 0.
  
 **Recurrence:**
-```
-if A[i-1] == B[j-1]:
-    dp[i][j] = dp[i-1][j-1] + value[A[i-1]]
-else:
-    dp[i][j] = max(dp[i-1][j], dp[i][j-1])
-```
+
+$$
+OPT(i, j) = \begin{cases}
+0 & \text{if } i = 0 \text{ or } j = 0 \\
+OPT(i-1, j-1) + v(A[i]) & \text{if } A[i] = B[j] \\
+\max\{OPT(i-1, j),\ OPT(i, j-1)\} & \text{otherwise}
+\end{cases}
+$$
  
 **Correctness:**
  
