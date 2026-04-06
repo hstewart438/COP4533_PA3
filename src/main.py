@@ -1,6 +1,6 @@
 import sys
 import os
-from opt import parse_input
+from opt import parse_input, hvlcs
 
 def main():
     if len(sys.argv) <= 1:
@@ -14,17 +14,18 @@ def main():
         k, alphabet, first_string, second_string = parse_input(file_path)
     except FileNotFoundError:
         print(f"Could not find {file_name} within 'tests' folder")
+        sys.exit(1)
 
-    # check read input
-    print(f"{k}")
+    max_value, subsequence = hvlcs(first_string, second_string, alphabet)
 
-    for letter, weight in alphabet.items():
-        print(f"{letter}: {weight}")
-
-    print(f"{first_string} \n{second_string}")
+    print(max_value)
+    print(subsequence)
 
     outfile = os.path.join("data", f"{file_name}.out")
-   
+    os.makedirs(os.path.dirname(outfile), exist_ok=True)
+    with open(outfile, 'w') as f:
+        f.write(f"{max_value}\n")
+        f.write(f"{subsequence}\n")
 
 
 if __name__ == "__main__":
