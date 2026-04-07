@@ -54,6 +54,8 @@ def get_graph_data(input, output):
     file_labels = []
     for i in range(1, len(runtimes)+1):
         file_labels.append(f"ex{i}")
+    
+    lengths = sorted(lengths)
 
     # Plot graph with matplot
     plt.figure(figsize=(12,6))
@@ -65,7 +67,7 @@ def get_graph_data(input, output):
 
     plt.xlabel("Input File")
     plt.ylabel("Runtime (ms)")
-    plt.title("HVLCS Runtime per Input File")
+    plt.title("HVLCS Runtime vs Input File")
     plt.grid(True)
     plt.tight_layout()
     plt.savefig(os.path.join(output_folder, "hvlcs_runtime.png"))
