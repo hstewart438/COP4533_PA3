@@ -4,9 +4,35 @@ import time
 import matplotlib.pyplot as plt
 from opt import parse_input, hvlcs
 
-def get_graph_data(input, output):
+def graph(output_folder, runtimes, lengths):
+    runtimes_in_milliseconds = [r * 1000 for r in runtimes]
+
+    file_labels = []
+    for i in range(1, len(runtimes)+1):
+        file_labels.append(f"ex{i}")
+    
+    lengths = sorted(lengths)
+
+    # Plot graph with matplot
+    plt.figure(figsize=(12,6))
+    plt.plot(file_labels, runtimes_in_milliseconds, marker='o', linestyle='-', color='blue')
+
+    # add in length of strings above points on graph
+    for i, length in enumerate(lengths):
+        plt.text(i, runtimes_in_milliseconds[i]+0.01, f"L={length}", ha='center', fontsize=8)
+
+    plt.xlabel("Input File")
+    plt.ylabel("Runtime (ms)")
+    plt.title("HVLCS Runtime vs Input File")
+    plt.grid(True)
+    plt.tight_layout()
+    plt.savefig(os.path.join(output_folder, "hvlcs_runtime.png"))
+    plt.show()
+
+def run_batch(input, output, run_graph):
     input_folder = input
     output_folder = output
+    visualize = run_graph
 
     # create outputfolder if not created
     os.makedirs(output_folder, exist_ok=True)
@@ -46,32 +72,11 @@ def get_graph_data(input, output):
         # write .out file to data/graph/
         outfile_path = os.path.join(output_folder, f"{os.path.splitext(file)[0]}.out")
         with open(outfile_path, 'w') as f:
-            f.write(f"{max_value}\n{subsequence}\n")   
-    
+            f.write(f"{max_value}\n{subsequence}\n") 
 
-    runtimes_in_milliseconds = [r * 1000 for r in runtimes]
+    if (visualize == True):
+        graph(output_folder, runtimes, lengths) 
 
-    file_labels = []
-    for i in range(1, len(runtimes)+1):
-        file_labels.append(f"ex{i}")
-    
-    lengths = sorted(lengths)
-
-    # Plot graph with matplot
-    plt.figure(figsize=(12,6))
-    plt.plot(file_labels, runtimes_in_milliseconds, marker='o', linestyle='-', color='blue')
-
-    # add in length of strings above points on graph
-    for i, length in enumerate(lengths):
-        plt.text(i, runtimes_in_milliseconds[i]+0.01, f"L={length}", ha='center', fontsize=8)
-
-    plt.xlabel("Input File")
-    plt.ylabel("Runtime (ms)")
-    plt.title("HVLCS Runtime vs Input File")
-    plt.grid(True)
-    plt.tight_layout()
-    plt.savefig(os.path.join(output_folder, "hvlcs_runtime.png"))
-    plt.show()
 
 def main():
     if len(sys.argv) <= 1:
@@ -79,8 +84,11 @@ def main():
         sys.exit(1)
 
     # batch run of files
-    if (len(sys.argv) == 3):
-        get_graph_data(sys.argv[1], sys.argv[2])
+    if ((len(sys.argv) == 4) and (sys.argv[3] == "graph")):
+        run_batch(sys.argv[1], sys.argv[2], True)
+        return
+    elif (len(sys.argv) == 3):
+        run_batch(sys.argv[1], sys.argv[2], False)
         return
     
     # single specified file
