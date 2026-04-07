@@ -44,6 +44,15 @@ On macOS, the Python 3 interpreter is usually available as `python3`.
 On many Linux/Windows setups, or if you've configured your system so `python` points to Python 3, you can use `python` instead.
 Equivalent commands with both options are shown below.
 
+### Install matplot from root:
+```bash
+# macOS (typical)
+python3 -m pip install matplotlib
+
+# Linux/Windows or if `python` is python 3
+pip install matplotlib
+```
+
 ### From the project root:
 
 ```bash
