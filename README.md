@@ -66,17 +66,28 @@ python src/main.py tests/<filename>.in
 
 ### To add and run a batch of test files, follow this format:
 
+You will need to create a folder within /tests and populate with .in files.
+
 ```bash
 
 # Required command line inputs:
 #    1. Input folder path to read
-#    2. Output folder path write
+#    2. Output folder path create and write to
 
 # macOS (typical)
 python3 src/main.py tests/<folder_name> data/<folder_name>
 
 # Linux/Windows or if `python` is Python 3
 python src/main.py tests/<folder_path> data/<folder_path>
+```
+
+To graph the files within your folder:
+```bash
+# macOS (typical)
+python3 src/main.py tests/<folder_name> data/<folder_name> graph
+
+# Linux/Windows or if `python` is Python 3
+python src/main.py tests/<folder_path> data/<folder_path> graph
 ```
 
 
@@ -97,14 +108,14 @@ rm data/*.out
 To run the test files and create the graph yourself: 
 ```bash
 # macOS (typical)
-python3 src/main.py tests/graph data/graph
+python3 src/main.py tests/graph data/graph graph
 
 # Linux/Windows or if `python` is Python 3
-python src/main.py tests/graph data/graph
+python src/main.py tests/graph data/graph graph
 ```
 
-The following graph shows the algorithms runtime across 10 varying input files. 
-Each input file has am increasing string length, as annoted by L within the graph.
+The following graph shows the algorithm runtime across 10 varying input files. 
+Each input file has an increasing string length, as annoted by L within the graph.
 
 <img width="1189" height="585" alt="Screenshot 2026-04-06 at 9 17 32 PM" src="https://github.com/user-attachments/assets/63147bbf-896a-470c-a33e-b139921c0962" />
 
@@ -153,3 +164,24 @@ Backtracking from `dp[4][4] = 9`:
 - `(2,0)`: j=0, stop
  
 Result (reversed): **cb** with value 5 + 4 = **9**
+
+### Q3: Big-Oh
+**Psuedocode:**
+function HVLCS_Length(A, B, values):
+   m = length(A)
+   n = length(B)
+
+   create dp[m x n] and set all entries to 0
+   
+   for i from 1 to m:
+       for j from 1 to n:
+           if A[i-1] == B[j-1]:
+              dp[i][j] = dp[i-1][j-1] + values[A[i-1]]
+           else:
+              dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+            
+   return dp[m][n]  # Maximum value of HVLCS
+
+**Analysis:**
+Time complexity is O(m * n).
+This is because we have to loop through every element in the m x n array, and each element takes O(1) time to calculate.
