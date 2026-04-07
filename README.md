@@ -54,7 +54,7 @@ python3 src/main.py tests/example.in
 python src/main.py tests/example.in
 ```
 
-### To add and run your own test files, follow this format:
+### To add and run a single test file, follow this format:
 
 ```bash
 # macOS (typical)
@@ -63,6 +63,22 @@ python3 src/main.py tests/<filename>.in
 # Linux/Windows or if `python` is Python 3
 python src/main.py tests/<filename>.in
 ```
+
+### To add and run a batch of test files, follow this format:
+
+```bash
+
+# Required command line inputs:
+#    1. Input folder path to read
+#    2. Output folder path write
+
+# macOS (typical)
+python3 src/main.py tests/<folder_name> data/<folder_name>
+
+# Linux/Windows or if `python` is Python 3
+python src/main.py tests/<folder_path> data/<folder_path>
+```
+
 
 ### Clearing output files
 
@@ -75,7 +91,23 @@ rm data/*.out
 ---
 
 ## Written Component
- 
+
+### Q1: Empirical Comparison
+
+To run the test files and create the graph yourself: 
+```bash
+# macOS (typical)
+python3 src/main.py tests/graph data/graph
+
+# Linux/Windows or if `python` is Python 3
+python src/main.py tests/graph data/graph
+```
+
+The following graph shows the algorithms runtime across 10 varying input files. 
+Each input file has am increasing string length, as annoted by L within the graph.
+
+<img width="1189" height="585" alt="Screenshot 2026-04-06 at 9 17 32 PM" src="https://github.com/user-attachments/assets/63147bbf-896a-470c-a33e-b139921c0962" />
+
 ### Q2: Recurrence Equation
  
 Let `dp[i][j]` be the maximum value of any common subsequence of `A[:i]` and `B[:j]`.
