@@ -166,7 +166,9 @@ Backtracking from `dp[4][4] = 9`:
 Result (reversed): **cb** with value 5 + 4 = **9**
 
 ### Q3: Big-Oh
+
 **Psuedocode:**
+```
 function HVLCS_Length(A, B, values):
    m = length(A)
    n = length(B)
@@ -181,6 +183,7 @@ function HVLCS_Length(A, B, values):
               dp[i][j] = max(dp[i-1][j], dp[i][j-1])
             
    return dp[m][n]  # Maximum value of HVLCS
+```
 
 **Analysis:**
 Time complexity is O(m * n).
